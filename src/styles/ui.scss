@@ -7,3 +7,14 @@
     // overflow: scroll;
   }
 }
+
+.list-tabs-item-center {
+  .el-tabs__nav {
+    display: flex;
+    width: 100%;
+  }
+  .el-tabs__item {
+    flex: 1;
+    text-align: center;
+  }
+}
