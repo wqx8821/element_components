@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import chooseArea from '../../components/chooseArea/src/index.vue';
-
 const changeArea = (event: any) => {
   console.log(event);
 };
@@ -8,7 +6,7 @@ const changeArea = (event: any) => {
 
 <template>
   <div>
-    <chooseArea @change="changeArea" />
+    <c-chooseArea @change="changeArea" />
   </div>
 </template>
 

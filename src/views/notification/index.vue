@@ -12,23 +12,23 @@ const clickAction = (event: any) => {
 <template>
   <div>
     <h2>基础展示</h2>
-    <notification :value="50" :max="40" disabledClick />
-    <notification :value="50" :isDot="true" disabledClick />
+    <c-notification :value="50" :max="40" disabledClick />
+    <c-notification :value="50" :isDot="true" disabledClick />
 
     <h2>自定义图标</h2>
-    <notification icon="ChatLineSquare" disabledClick />
-    <notification :value="50" disabledClick>
+    <c-notification icon="ChatLineSquare" disabledClick />
+    <c-notification :value="50" disabledClick>
       <template #icon>
         <ChatLineSquare />
       </template>
-    </notification>
+    </c-notification>
 
     <h2>唤醒通知菜单</h2>
-    <notification>
+    <c-notification>
       <template #default>
-        <list @clickItem="clickItem" @clickAction="clickAction" :list="listData" :actions="actions"></list>
+        <c-list @clickItem="clickItem" @clickAction="clickAction" :list="listData" :actions="actions"></c-list>
       </template>
-    </notification>
+    </c-notification>
   </div>
 </template>
 

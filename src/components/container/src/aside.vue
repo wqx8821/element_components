@@ -26,7 +26,7 @@ defineProps({
         <el-icon><setting /></el-icon>
         <span>趋势标记</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="chooseTime">
         <el-icon><setting /></el-icon>
         <span>时间选择</span>
       </el-menu-item>
@@ -34,27 +34,27 @@ defineProps({
         <el-icon><setting /></el-icon>
         <span>通知菜单</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="chooseCity">
         <el-icon><setting /></el-icon>
         <span>城市选择</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="progress">
         <el-icon><setting /></el-icon>
         <span>进度条</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="menu">
         <el-icon><setting /></el-icon>
         <span>导航菜单</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="calendar">
         <el-icon><setting /></el-icon>
         <span>日历</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="form">
         <el-icon><setting /></el-icon>
         <span>表单</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="table">
         <el-icon><setting /></el-icon>
         <span>表格</span>
       </el-menu-item>
