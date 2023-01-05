@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElTimeSelect: typeof import('element-plus/es')['ElTimeSelect']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Form: typeof import('./src/components/form/index.vue')['default']
     Header: typeof import('./src/components/container/src/header.vue')['default']

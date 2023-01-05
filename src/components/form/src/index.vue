@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType, ref, onMounted, watch } from 'vue';
-import { FormOptions } from './types/types';
+import { FormOptions, FormInstance } from './types/types';
 import cloneDeep from 'lodash/cloneDeep';
 
 const emits = defineEmits(['on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'before-upload', 'before-remove', 'on-exceed']);
@@ -13,10 +13,16 @@ const props = defineProps({
   httpRequest: {
     type: Function,
   },
+  // action 左中右位置
+  actionPosition: {
+    type: String,
+    default: 'center',
+  },
 });
 
 let model = ref<any>(null);
 let rules = ref<any>(null);
+let fromRef = ref<FormInstance | null>(null);
 
 // 初始化表单的方法
 let initForm = () => {
@@ -54,6 +60,7 @@ let onRemove = (file: File, fileList: FileList) => {
   emits('on-remove', { file, fileList });
 };
 let onSuccess = (response: any, file: File, fileList: FileList) => {
+  console.log('成功');
   // 上传图片成功 给表单上传项赋值
   let uploadItem = props.options.find((item) => item.type === 'upload')!;
   model.value[uploadItem.prop!] = { response, file, fileList };
@@ -81,7 +88,7 @@ let onExceed = (files: File, fileList: FileList) => {
 
 <template>
   <div>
-    <el-form v-if="model" :model="model" :rules="rules" :validate-on-rule-change="false">
+    <el-form ref="fromRef" v-if="model" :model="model" :rules="rules" :validate-on-rule-change="false">
       <template v-for="(item, i) in options" :key="i">
         <!-- 没有表单子元素的情况 -->
         <el-form-item v-if="!item.children || !item.children.length" :prop="item.prop" :label="item.label">
@@ -90,6 +97,7 @@ let onExceed = (files: File, fileList: FileList) => {
           <!-- 上传组件 -->
           <el-upload
             v-if="item.type === 'upload'"
+            v-bind="item.uploadAttrs"
             :on-preview="onPreview"
             :on-remove="onRemove"
             :on-success="onSuccess"
@@ -101,7 +109,8 @@ let onExceed = (files: File, fileList: FileList) => {
             :http-request="httpRequest"
             :on-exceed="onExceed"
           >
-            上传
+            <slot name="uploadArea"></slot>
+            <slot name="uploadTip"></slot>
           </el-upload>
 
           <!-- 富文本 -->
@@ -114,6 +123,11 @@ let onExceed = (files: File, fileList: FileList) => {
           </component>
         </el-form-item>
       </template>
+      <el-form-item>
+        <div :style="{ display: 'flex', justifyContent: props.actionPosition, width: '100%' }">
+          <slot name="action" :form="fromRef" :model="model"></slot>
+        </div>
+      </el-form-item>
     </el-form>
   </div>
 </template>
