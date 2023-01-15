@@ -9,10 +9,11 @@ import progress from './progress'; // 进度条组件
 import form from './form'; // 表单
 import modalForm from './modalForm'; // 弹框表单
 import chooseTime from './chooseTime'; // 时间选择器
+import table from './table'; // 表格
 
 import { App } from 'vue';
 
-const components = [chooseTime, chooseArea, chooseIcon, trend, notification, list, menu, progress, form, modalForm];
+const components = [chooseTime, chooseArea, chooseIcon, trend, notification, list, menu, progress, form, modalForm, table];
 
 export default {
   install(app: App) {
