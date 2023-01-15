@@ -1,9 +1,27 @@
 <script setup lang="ts">
-import { ElMessageBox, ElMessage, ElButton } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
-import { ActionScope, FormOptions } from '../../components/form/src/types/types';
+import { FormInstance, FormOptions } from '../../components/form/src/types/types';
 
-let form = ref();
+let visible = ref<boolean>(false);
+
+const open = () => {
+  visible.value = true;
+};
+// 点击确认
+const confirm = (form: any) => {
+  const validate = form.validate();
+  const model = form.getFormData();
+  // 表单验证
+  validate((value: any) => {
+    if (value) {
+      console.log(model);
+      ElMessage.success('验证成功');
+    } else {
+      ElMessage.error('验证失败');
+    }
+  });
+};
 let options: FormOptions[] = [
   {
     type: 'input',
@@ -139,77 +157,18 @@ let options: FormOptions[] = [
     ],
   },
 ];
-
-let handleRemove = (file: any, fileList: any) => {
-  console.log('handleRemove');
-  console.log(file, fileList);
-};
-let handlePreview = (file: any) => {
-  console.log('handlePreview');
-  console.log(file);
-};
-let beforeRemove = (val: any) => {
-  console.log('beforeRemove');
-  return ElMessageBox.confirm(`Cancel the transfert of ${val.file.name} ?`);
-};
-let handleExceed = (val: any) => {
-  console.log('handleExceed', val);
-  ElMessage.warning(`The limit is 3, you selected ${val.files.length} files this time, add up to ${val.files.length + val.fileList.length} totally`);
-};
-let handleSuccess = (val: any) => {
-  console.log('success');
-  console.log(val);
-};
-let handleChange = (val: any) => {
-  console.log('change');
-  console.log(val);
-};
-let handleBeforeUpload = (val: any) => {
-  console.log('handleBeforeUpload');
-  console.log(val);
-};
-
-// 表单动作项
-let submitForm = (scope: ActionScope) => {
-  scope.form.validate((valid) => {
-    if (valid) {
-      // scope.model表单的值 scope.form表单的实例
-      console.log(scope.model);
-      ElMessage.success('提交成功');
-    } else {
-      ElMessage.error('表单填写有误,请检查');
-    }
-  });
-};
-// 重置表单
-let resetForm = () => {
-  form.value.resetFields();
-};
 </script>
 
 <template>
-  <c-form
-    ref="form"
-    :options="options"
-    @on-change="handleChange"
-    @before-upload="handleBeforeUpload"
-    @on-preview="handlePreview"
-    @on-remove="handleRemove"
-    @before-remove="beforeRemove"
-    @on-success="handleSuccess"
-    @on-exceed="handleExceed"
-  >
-    <template #uploadArea>
-      <el-button size="small" type="primary">Click to upload</el-button>
+  <el-button type="primary" @click="open">open</el-button>
+  <c-modal-form v-model:visible="visible" width="65%" title="标题" :options="options">
+    <template #footer="{ form }">
+      <span class="dialog-footer">
+        <el-button @click="visible = false">Cancel</el-button>
+        <el-button type="primary" @click="confirm(form)"> Confirm </el-button>
+      </span>
     </template>
-    <template #uploadTip>
-      <div style="color: #ccc; font-size: 12px">jpg/png files with a size less than 500kb</div>
-    </template>
-    <template #action="scope">
-      <el-button size="small" type="primary" @click="resetForm()">清空</el-button>
-      <el-button size="small" type="primary" @click="submitForm(scope)">确认</el-button>
-    </template>
-  </c-form>
+  </c-modal-form>
 </template>
 
 <style lang="scss" scoped></style>

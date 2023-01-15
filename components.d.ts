@@ -36,6 +36,7 @@ declare module '@vue/runtime-core' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Form: typeof import('./src/components/form/index.vue')['default']
     Header: typeof import('./src/components/container/src/header.vue')['default']
+    ModalForm: typeof import('./src/components/modalForm/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Src: typeof import('./src/components/chooseArea/src/index.vue')['default']

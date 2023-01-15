@@ -54,6 +54,10 @@ defineProps({
         <el-icon><setting /></el-icon>
         <span>表单</span>
       </el-menu-item>
+      <el-menu-item index="modalForm">
+        <el-icon><setting /></el-icon>
+        <span>弹出框表单</span>
+      </el-menu-item>
       <el-menu-item index="table">
         <el-icon><setting /></el-icon>
         <span>表格</span>

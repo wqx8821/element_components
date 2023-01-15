@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { PropType, ref, onMounted, watch } from 'vue';
+import { PropType, ref, onMounted, watch, nextTick } from 'vue';
 import { FormOptions, FormInstance } from './types/types';
 import cloneDeep from 'lodash/cloneDeep';
+import E from 'wangeditor';
+import form from '..';
 
 const emits = defineEmits(['on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'before-upload', 'before-remove', 'on-exceed']);
 const props = defineProps({
@@ -23,6 +25,7 @@ const props = defineProps({
 let model = ref<any>(null);
 let rules = ref<any>(null);
 let fromRef = ref<FormInstance | null>(null);
+let edit = ref();
 
 // 初始化表单的方法
 let initForm = () => {
@@ -33,16 +36,61 @@ let initForm = () => {
     props.options.map((item: FormOptions) => {
       m[item.prop!] = item.value;
       r[item.prop!] = item.rules;
+      // 初始化富文本操作
+      if (item.type == 'editor') {
+        nextTick(() => {
+          if (document.getElementById('editor')) {
+            const editor = new E('#editor');
+            if (item.placeholder) editor.config.placeholder = item.placeholder;
+            editor.create();
+            // 设置默认值内容方法
+            editor.txt.html(item.value);
+            // 发生改变获取新内容的方法
+            editor.config.onchange = (newHtml: string) => {
+              // 新值搜集到表单内
+              model.value[item.prop!] = newHtml;
+            };
+            edit.value = editor;
+          }
+        });
+      }
     });
     // 深拷贝构造的数据 并 赋予组件绑定的动态值
     model.value = cloneDeep(m);
     rules.value = cloneDeep(r);
   }
 };
+// 重置表单的方法
+let resetFields = () => {
+  // 重置element-plus表单
+  fromRef.value!.resetFields();
+  // 重置富文本编辑器内容
+  if (props.options && props.options.length) {
+    // 获取编辑配置项
+    let editorItem = props.options.find((item) => item.type === 'editor');
+    edit.value.txt.html(editorItem?.value);
+  }
+};
+// 表单验证
+let validate = () => {
+  return fromRef.value!.validate;
+};
+// 表单数据
+let getFormData = () => {
+  return model.value;
+};
+
+// 分发重置函数
+defineExpose({
+  resetFields,
+  validate,
+  getFormData,
+});
 
 onMounted(() => {
   initForm();
 });
+
 // 监听options 异步请求时重新加载
 watch(
   () => props.options,
