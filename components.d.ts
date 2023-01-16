@@ -39,7 +39,7 @@ declare module '@vue/runtime-core' {
     ModalForm: typeof import('./src/components/modalForm/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Src: typeof import('./src/components/chooseArea/src/index.vue')['default']
+    Src: typeof import('./src/components/calendar/src/index.vue')['default']
     Table: typeof import('./src/components/table/index.vue')['default']
   }
 }

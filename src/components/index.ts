@@ -10,10 +10,12 @@ import form from './form'; // 表单
 import modalForm from './modalForm'; // 弹框表单
 import chooseTime from './chooseTime'; // 时间选择器
 import table from './table'; // 表格
+import calendar from './calendar'; // 日历
 
 import { App } from 'vue';
 
-const components = [chooseTime, chooseArea, chooseIcon, trend, notification, list, menu, progress, form, modalForm, table];
+// 也可以通过context来获取文件名
+const components = [chooseTime, chooseArea, chooseIcon, trend, notification, list, menu, progress, form, modalForm, table, calendar];
 
 export default {
   install(app: App) {

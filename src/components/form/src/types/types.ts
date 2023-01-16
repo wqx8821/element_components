@@ -1,5 +1,3 @@
-// 可配置表单
-
 // 表单验证类型
 import { RuleItem } from './rule';
 import { CSSProperties } from 'vue';
